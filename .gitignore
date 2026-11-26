@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+build/
+*.zip
+.env
+.env.*
+.aws/
+outputs.env
+.venv/
+.DS_Store
