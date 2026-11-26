@@ -20,7 +20,7 @@ DB_NAME="facility_tickets"
 DB_USER="ticketing_admin"
 ENV_DIR="$HOME/.config/facility-ticketing"
 ENV_FILE="$ENV_DIR/db.env"
-export AWS_DEFAULT_REGION="$REGION"
+export AWS_DEFAULT_REGION="$REGION" AWS_PAGER=""
 
 say() { printf '\n==> %s\n' "$*"; }
 

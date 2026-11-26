@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Hapus resource proyek agar budget lab tidak terpakai (RDS adalah yang paling mahal).
 set -uo pipefail
-export AWS_DEFAULT_REGION="${AWS_REGION:-us-east-1}"
+export AWS_DEFAULT_REGION="${AWS_REGION:-us-east-1}" AWS_PAGER=""
 DB_ID="${DB_ID:-ticketing-db}"
 
 sudo systemctl disable --now facility-ticketing 2>/dev/null && echo "Service dihentikan."
