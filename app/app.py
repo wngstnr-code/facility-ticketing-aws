@@ -1,4 +1,4 @@
-"""Facility Ticketing — REST API CRUD (Flask) di EC2, data di Amazon RDS for MySQL.
+"""Facility Ticketing: REST API CRUD (Flask) di EC2, data di Amazon RDS for MySQL.
 
 Endpoint:
   POST   /api/tickets          Create  (201)
@@ -225,14 +225,14 @@ h1{margin:0}small{color:#555}table{border-collapse:collapse;width:100%;margin-to
 th,td{border:1px solid #ddd;padding:6px 8px;text-align:left;font-size:14px}th{background:#eef2ff}
 .s-open{color:#b45309}.s-in_progress{color:#1d4ed8}.s-resolved,.s-closed{color:#15803d}</style></head>
 <body><h1>Facility Ticketing</h1>
-<small>Laporan kerusakan fasilitas kampus · EC2 + Amazon RDS for MySQL · DB: {{ db_host }}</small>
+<small>Laporan kerusakan fasilitas kampus, EC2 + Amazon RDS for MySQL, DB: {{ db_host }}</small>
 <table><tr><th>ID</th><th>Kode</th><th>Judul</th><th>Lokasi</th><th>Kategori</th><th>Prioritas</th>
 <th>Status</th><th>Pelapor</th><th>Teknisi</th><th>Dibuat</th></tr>
 {% for t in rows %}<tr><td>{{t.id}}</td><td>{{t.ticket_code}}</td><td>{{t.title}}</td><td>{{t.location}}</td>
 <td>{{t.category}}</td><td>{{t.priority}}</td><td class="s-{{t.status}}">{{t.status}}</td>
 <td>{{t.reporter_name}}</td><td>{{t.assignee or '-'}}</td><td>{{t.created_at}}</td></tr>
 {% else %}<tr><td colspan="10">Belum ada tiket.</td></tr>{% endfor %}</table>
-<p><small>API: <code>/api/tickets</code> · Health: <code>/health</code></small></p></body></html>"""
+<p><small>API: <code>/api/tickets</code>, Health: <code>/health</code></small></p></body></html>"""
 
 
 app = create_app()

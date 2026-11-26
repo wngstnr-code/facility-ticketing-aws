@@ -5,7 +5,7 @@
 - Akses: lab hanya mengizinkan EC2 dibuat lewat **AWS Cloud9**. Pembuatan DynamoDB, CloudShell, dan `ec2:RunInstances` langsung ditolak, sehingga dipilih Track A.
 - IAM: Cloud9 memakai kredensial sementara role lab (`voclabs`) untuk AWS CLI. Tidak ada access key jangka panjang.
 
-## Fase 1 — Week 12 (selesai)
+## Fase 1: Week 12 (selesai)
 | Langkah | Perintah / aksi | Hasil |
 |---|---|---|
 | 1 | Konsol Cloud9 → *Create environment*: `ticketing-app-server`, t3.small, Amazon Linux 2023, SSH, LabVPC, Public Subnet1 | Instance EC2 dengan IP publik |
@@ -18,12 +18,12 @@
 
 Perkiraan biaya fase 1 (on-demand us-east-1): EC2 t3.small ≈ $0,021/jam (Cloud9 hibernasi otomatis setelah 30 menit idle) dan RDS db.t3.micro ≈ $0,017/jam + 20 GB gp2 ≈ $2,3/bulan. Untuk sesi lab 2–3 jam totalnya < $0,20.
 
-## Fase 2 — Ketersediaan & keamanan
+## Fase 2: Ketersediaan & keamanan
 - Kredensial DB dipindah ke AWS Secrets Manager dan dibaca aplikasi lewat instance profile (bukan file `db.env`).
 - RDS Multi-AZ dan backup retention 7 hari.
 - Nginx/ALB dengan HTTPS (ACM), port 8080 tidak lagi dibuka langsung.
 
-## Fase 3 — Skalabilitas & operasional
+## Fase 3: Skalabilitas & operasional
 - AMI/Launch Template + Auto Scaling Group di 2 AZ di belakang Application Load Balancer.
 - CloudWatch Agent untuk log gunicorn dan alarm CPU/5xx/koneksi DB.
 - CI/CD: GitHub Actions menjalankan pytest terhadap MySQL service container, lalu deploy ke EC2 (CodeDeploy).
