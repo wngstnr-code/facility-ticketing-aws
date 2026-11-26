@@ -1,33 +1,33 @@
 # Rencana Deployment
 
 ## Lingkungan
-- Akun: AWS Academy Learner Lab, region `us-east-1`.
-- Tool: AWS CloudShell (AWS CLI v2, Python 3, git, zip sudah tersedia).
-- IAM: Learner Lab tidak mengizinkan pembuatan role baru, jadi Lambda memakai role bawaan **LabRole**.
-- Tidak ada access key jangka panjang: CloudShell memakai kredensial sesi lab yang sementara.
+- Akun: AWS Academy Lab (Lab Project), region `us-east-1`, VPC `LabVPC`.
+- Akses: lab hanya mengizinkan EC2 dibuat lewat **AWS Cloud9**. Pembuatan DynamoDB, CloudShell, dan `ec2:RunInstances` langsung ditolak, sehingga dipilih Track A.
+- IAM: Cloud9 memakai kredensial sementara role lab (`voclabs`) untuk AWS CLI. Tidak ada access key jangka panjang.
 
 ## Fase 1 — Week 12 (selesai)
-| Langkah | Perintah | Hasil |
+| Langkah | Perintah / aksi | Hasil |
 |---|---|---|
-| 1 | `git clone https://github.com/wngstnr-code/facility-ticketing-serverless.git` | Kode di CloudShell |
-| 2 | `./scripts/deploy.sh` | Tabel DynamoDB, Lambda, HTTP API + 6 route, izin invoke |
-| 3 | `./scripts/smoke-test.sh` | Bukti konektivitas: 201 / 200 / 200 / 204 / 404 / 400 |
-| 4 | Screenshot konsol (DynamoDB, Lambda, API Gateway, CloudWatch) | Bukti AWS |
-| 5 | (opsional) `./scripts/cleanup.sh`, lalu **End Lab** | Budget terjaga |
+| 1 | Konsol Cloud9 → *Create environment*: `ticketing-app-server`, t3.small, Amazon Linux 2023, SSH, LabVPC, Public Subnet1 | Instance EC2 dengan IP publik |
+| 2 | `git clone https://github.com/wngstnr-code/facility-ticketing-aws.git` | Kode di EC2 |
+| 3 | `./scripts/provision-rds.sh <IP-saya>/32` | SG 8080 untuk IP saya, `ticketing-db-sg` (3306 hanya dari SG EC2), RDS MySQL privat, `db.env` (chmod 600) |
+| 4 | `./scripts/setup-app.sh` | venv, uji koneksi `mysql` ke RDS, tabel `tickets`, service systemd gunicorn :8080 |
+| 5 | `./scripts/seed.sh && ./scripts/smoke-test.sh` | Bukti CRUD: 201 / 200 / 200 / 204 / 404 / 400 |
+| 6 | Screenshot konsol (EC2, SG, RDS) dan browser `http://<IP>:8080` | Bukti AWS |
+| 7 | `./scripts/cleanup.sh`, lalu **End Lab** | Budget terjaga |
 
-Biaya: semua layanan *pay-per-request*. Untuk volume uji (<100 request) biayanya praktis $0, tidak ada resource yang menyala terus seperti EC2/RDS.
+Perkiraan biaya fase 1 (on-demand us-east-1): EC2 t3.small ≈ $0,021/jam (Cloud9 hibernasi otomatis setelah 30 menit idle) dan RDS db.t3.micro ≈ $0,017/jam + 20 GB gp2 ≈ $2,3/bulan. Untuk sesi lab 2–3 jam totalnya < $0,20.
 
-## Fase 2 — Fitur & keamanan
-- Amazon Cognito user pool + JWT authorizer di API Gateway. `POST`/`GET` untuk semua pengguna login, `PUT`/`DELETE` hanya grup `teknisi`.
-- Global Secondary Index `status-index` (PK `status`, SK `created_at`) agar filter status memakai `Query`, bukan `Scan`.
-- Validasi lanjutan dan pagination (`limit` + `next_token`).
+## Fase 2 — Ketersediaan & keamanan
+- Kredensial DB dipindah ke AWS Secrets Manager dan dibaca aplikasi lewat instance profile (bukan file `db.env`).
+- RDS Multi-AZ dan backup retention 7 hari.
+- Nginx/ALB dengan HTTPS (ACM), port 8080 tidak lagi dibuka langsung.
 
-## Fase 3 — Frontend & operasional
-- Web UI statis di Amazon S3 + CloudFront yang memanggil API yang sama.
-- CloudWatch Alarm untuk error rate Lambda dan 5xx API Gateway.
-- Infrastructure as Code: pindahkan `deploy.sh` ke AWS SAM/CloudFormation.
-- CI/CD: GitHub Actions menjalankan `pytest`, lalu deploy otomatis saat push ke `main`.
+## Fase 3 — Skalabilitas & operasional
+- AMI/Launch Template + Auto Scaling Group di 2 AZ di belakang Application Load Balancer.
+- CloudWatch Agent untuk log gunicorn dan alarm CPU/5xx/koneksi DB.
+- CI/CD: GitHub Actions menjalankan pytest terhadap MySQL service container, lalu deploy ke EC2 (CodeDeploy).
 
 ## Rollback
-- Lambda: `aws lambda update-function-code` dengan zip commit sebelumnya (atau versi/alias Lambda di fase 3).
-- Data: aktifkan Point-in-Time Recovery DynamoDB di fase 2.
+- Aplikasi: `git checkout <commit-sebelumnya> && sudo systemctl restart facility-ticketing`.
+- Data: restore snapshot/point-in-time RDS.
