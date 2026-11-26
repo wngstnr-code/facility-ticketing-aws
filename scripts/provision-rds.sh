@@ -56,11 +56,18 @@ SUBNETS=$(aws ec2 describe-subnets --filters Name=vpc-id,Values="$VPC_ID" \
   --query "Subnets[?MapPublicIpOnLaunch==\`false\`].SubnetId" --output text)
 [ -z "$SUBNETS" ] && SUBNETS=$(aws ec2 describe-subnets --filters Name=vpc-id,Values="$VPC_ID" --query 'Subnets[].SubnetId' --output text)
 echo "Subnet: $SUBNETS"
-if ! aws rds describe-db-subnet-groups --db-subnet-group-name ticketing-db-subnets >/dev/null 2>&1; then
+SUBNET_GROUP=ticketing-db-subnets
+if ! aws rds describe-db-subnet-groups --db-subnet-group-name "$SUBNET_GROUP" >/dev/null 2>&1; then
   # shellcheck disable=SC2086
-  aws rds create-db-subnet-group --db-subnet-group-name ticketing-db-subnets \
-    --db-subnet-group-description "Facility Ticketing private subnets" --subnet-ids $SUBNETS >/dev/null
-  echo "Subnet group dibuat."
+  if aws rds create-db-subnet-group --db-subnet-group-name "$SUBNET_GROUP" \
+      --db-subnet-group-description "Facility Ticketing private subnets" --subnet-ids $SUBNETS >/dev/null 2>&1; then
+    echo "Subnet group dibuat."
+  else
+    # Akun lab bisa membatasi pembuatan subnet group: pakai subnet group yang sudah ada di VPC yang sama.
+    SUBNET_GROUP=$(aws rds describe-db-subnet-groups \
+      --query "DBSubnetGroups[?VpcId=='$VPC_ID'].DBSubnetGroupName | [0]" --output text)
+    echo "Tidak bisa membuat subnet group, memakai yang ada: $SUBNET_GROUP"
+  fi
 fi
 
 say "RDS MySQL: $DB_ID"
@@ -77,7 +84,7 @@ else
     --allocated-storage 20 --storage-type gp2 --storage-encrypted \
     --master-username "$DB_USER" --master-user-password "$DB_PASSWORD" \
     --db-name "$DB_NAME" \
-    --vpc-security-group-ids "$DB_SG" --db-subnet-group-name ticketing-db-subnets \
+    --vpc-security-group-ids "$DB_SG" --db-subnet-group-name "$SUBNET_GROUP" \
     --no-publicly-accessible --no-multi-az --backup-retention-period 1 \
     --tags Key=project,Value=facility-ticketing >/dev/null
   unset DB_PASSWORD
