@@ -1,174 +1,137 @@
-<svg xml:space="preserve" xmlns="http://www.w3.org/2000/svg" width="1800" height="1060" viewBox="0 0 1800 1060" font-family="Inter, DejaVu Sans, sans-serif">
+<svg xml:space="preserve" xmlns="http://www.w3.org/2000/svg" width="1800" height="1080" viewBox="0 0 1800 1080" font-family="Inter, DejaVu Sans, sans-serif">
   <defs>
-    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
-    </marker>
-    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
-    </marker>
-    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
-    </marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker>
     <style>
       .t{font-size:22px;font-weight:700;fill:#111827}
       .s{font-size:16px;fill:#374151}
       .xs{font-size:14px;fill:#4b5563}
-      .mono{font-family:'DejaVu Sans Mono',monospace;font-size:14px;fill:#1f2937}
+      .mono{font-family:'DejaVu Sans Mono',monospace;font-size:13.5px;fill:#1f2937}
       .lbl{font-size:15px;font-weight:600;fill:#1f2937}
       .num{font-size:16px;font-weight:700;fill:#fff}
+      .sg{font-size:13.5px;font-weight:600;fill:#b91c1c}
     </style>
   </defs>
+  <rect width="1800" height="1080" fill="#fff"/>
+  <text x="40" y="50" font-size="30" font-weight="800" fill="#111827">Facility Ticketing — Arsitektur Track A (Cloud VM: EC2 + Amazon RDS for MySQL)</text>
+  <text x="40" y="80" class="s">Wangsit Nursyahada · 545092 · Week 12 · Garis solid = dibangun di Week 12, garis putus-putus = rencana fase berikutnya</text>
 
-  <rect width="1800" height="1060" fill="#ffffff"/>
-  <text x="40" y="52" font-size="30" font-weight="800" fill="#111827">Facility Ticketing — Arsitektur Serverless (Track C)</text>
-  <text x="40" y="82" class="s">Wangsit Nursyahada · 545092 · Week 12 · Garis solid = dibangun di Week 12, garis putus-putus = rencana fase berikutnya</text>
+  <rect x="40" y="200" width="230" height="110" rx="14" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="58" y="234" class="t">Pelapor</text>
+  <text x="58" y="258" class="s">Mahasiswa / dosen</text>
+  <text x="58" y="282" class="xs">Browser · curl · Postman</text>
+  <rect x="40" y="340" width="230" height="110" rx="14" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="58" y="374" class="t">Teknisi / Admin</text>
+  <text x="58" y="398" class="s">Laboran fasilitas</text>
+  <text x="58" y="422" class="xs">Update status, hapus tiket</text>
 
-  <!-- Clients -->
-  <rect x="40" y="170" width="250" height="120" rx="14" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-  <text x="60" y="205" class="t">Pelapor</text>
-  <text x="60" y="232" class="s">Mahasiswa / dosen</text>
-  <text x="60" y="256" class="xs">curl · Postman · web form</text>
-  <text x="60" y="276" class="xs">Create &amp; lihat tiket</text>
+  <rect x="40" y="490" width="230" height="200" rx="12" fill="#fff" stroke="#d1d5db"/>
+  <text x="54" y="516" class="lbl">Alur request &amp; data</text>
+  <text x="54" y="540" class="xs">1  HTTP :8080 ke IP publik EC2</text>
+  <text x="54" y="562" class="xs">2  IGW → Public Subnet 1</text>
+  <text x="54" y="584" class="xs">3  Flask/gunicorn proses CRUD</text>
+  <text x="54" y="606" class="xs">4  PyMySQL → RDS :3306</text>
+  <text x="54" y="628" class="xs">    (jaringan privat VPC)</text>
+  <text x="54" y="650" class="xs">5  Hasil query → JSON/HTML</text>
+  <text x="54" y="672" class="xs">    kembali ke client</text>
 
-  <rect x="40" y="330" width="250" height="120" rx="14" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-  <text x="60" y="365" class="t">Teknisi / Admin</text>
-  <text x="60" y="392" class="s">Laboran fasilitas</text>
-  <text x="60" y="416" class="xs">Update status, assign,</text>
-  <text x="60" y="436" class="xs">hapus tiket</text>
+  <rect x="320" y="110" width="1440" height="680" rx="18" fill="#fffaf0" stroke="#d97706" stroke-width="2.5"/>
+  <text x="345" y="145" font-size="21" font-weight="800" fill="#b45309">AWS Cloud · us-east-1 · akun AWS Academy Lab</text>
 
-  <rect x="40" y="490" width="250" height="96" rx="14" fill="#fff" stroke="#6b7280" stroke-width="2" stroke-dasharray="8 6"/>
-  <text x="60" y="524" class="lbl">Web UI statis (rencana)</text>
-  <text x="60" y="548" class="xs">Amazon S3 + CloudFront</text>
-  <text x="60" y="568" class="xs">memanggil API yang sama</text>
+  <rect x="335" y="300" width="110" height="90" rx="10" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="352" y="335" class="lbl">Internet</text>
+  <text x="352" y="356" class="lbl">Gateway</text>
 
-  <!-- AWS cloud -->
-  <rect x="360" y="120" width="1400" height="640" rx="18" fill="#fffaf0" stroke="#d97706" stroke-width="2.5"/>
-  <text x="385" y="156" font-size="22" font-weight="800" fill="#b45309">AWS Cloud · us-east-1 · akun AWS Academy Learner Lab</text>
-  <text x="385" y="180" class="xs">Semua layanan managed (regional) — tidak butuh VPC/subnet/EC2; jaringan publik hanya lewat endpoint HTTPS API Gateway</text>
+  <rect x="470" y="165" width="1270" height="605" rx="16" fill="#f8fafc" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="492" y="196" font-size="19" font-weight="800" fill="#6d28d9">VPC: LabVPC (vpc-0f089d8183c101541)</text>
 
-  <!-- API Gateway -->
-  <rect x="400" y="215" width="380" height="330" rx="14" fill="#fdf2f8" stroke="#be185d" stroke-width="2.5"/>
-  <text x="420" y="250" class="t">Amazon API Gateway</text>
-  <text x="420" y="274" class="s">HTTP API · facility-tickets-http-api</text>
-  <text x="420" y="298" class="xs">Endpoint publik HTTPS (TLS) · stage $default</text>
-  <text x="420" y="318" class="xs">Throttling 10 req/s, burst 20 · CORS</text>
-  <rect x="418" y="332" width="344" height="198" rx="8" fill="#fff" stroke="#f9a8d4"/>
-  <text x="432" y="356" class="mono">POST   /tickets        Create</text>
-  <text x="432" y="380" class="mono">GET    /tickets        List</text>
-  <text x="432" y="404" class="mono">GET    /tickets/{id}   Read</text>
-  <text x="432" y="428" class="mono">PUT    /tickets/{id}   Update</text>
-  <text x="432" y="452" class="mono">DELETE /tickets/{id}   Delete</text>
-  <text x="432" y="476" class="mono">GET    /health         Cek koneksi</text>
-  <text x="432" y="508" class="xs">Integrasi: AWS_PROXY, payload v2.0</text>
+  <rect x="495" y="215" width="560" height="430" rx="14" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+  <text x="515" y="244" class="lbl" fill="#15803d">Public Subnet 1 · route 0.0.0.0/0 → Internet Gateway</text>
 
-  <!-- Lambda -->
-  <rect x="870" y="215" width="380" height="250" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
-  <text x="890" y="250" class="t">AWS Lambda</text>
-  <text x="890" y="274" class="s">facility-tickets-api</text>
-  <text x="890" y="300" class="xs">Python 3.12 · 128 MB · timeout 10 s</text>
-  <text x="890" y="322" class="xs">Handler: app.lambda_handler</text>
-  <text x="890" y="344" class="xs">Router 6 route + validasi input</text>
-  <text x="890" y="366" class="xs">(400 / 404 / 500 dalam JSON)</text>
-  <text x="890" y="388" class="xs">Env: TABLE_NAME=facility-tickets</text>
-  <text x="890" y="420" class="xs">Tanpa secret/kunci di kode —</text>
-  <text x="890" y="440" class="xs">kredensial sementara dari role</text>
+  <rect x="520" y="262" width="510" height="250" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="540" y="296" class="t">Amazon EC2 — ticketing-app-server</text>
+  <text x="540" y="320" class="xs">Dibuat via AWS Cloud9 · t3.small · Amazon Linux 2023 · IP publik</text>
+  <rect x="540" y="334" width="470" height="160" rx="8" fill="#fff" stroke="#fdba74"/>
+  <text x="556" y="358" class="lbl">systemd: facility-ticketing.service</text>
+  <text x="556" y="380" class="xs">gunicorn (2 worker) :8080 → aplikasi Flask</text>
+  <text x="556" y="404" class="mono">POST/GET  /api/tickets</text>
+  <text x="556" y="424" class="mono">GET/PUT/DELETE /api/tickets/{id}</text>
+  <text x="556" y="444" class="mono">GET /health   GET /  (halaman daftar)</text>
+  <text x="556" y="470" class="xs">Kredensial DB: ~/.config/facility-ticketing/db.env</text>
+  <text x="556" y="488" class="xs">(chmod 600, password acak, tidak di Git)</text>
 
-  <!-- DynamoDB -->
-  <rect x="1340" y="215" width="390" height="250" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
-  <text x="1360" y="250" class="t">Amazon DynamoDB</text>
-  <text x="1360" y="274" class="s">Tabel: facility-tickets</text>
-  <text x="1360" y="300" class="xs">Partition key: ticket_id (String)</text>
-  <text x="1360" y="322" class="xs">On-demand (PAY_PER_REQUEST)</text>
-  <text x="1360" y="344" class="xs">Enkripsi at-rest (AWS owned key)</text>
-  <text x="1360" y="376" class="lbl">Entitas: Ticket</text>
-  <text x="1360" y="398" class="xs">title, description, location, category,</text>
-  <text x="1360" y="418" class="xs">priority, status, reporter_name,</text>
-  <text x="1360" y="438" class="xs">assignee, created_at, updated_at</text>
+  <rect x="520" y="528" width="510" height="100" rx="10" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+  <text x="538" y="554" class="sg">Security group EC2 (aws-cloud9-…, sg-07e42b96bb15eb7f2)</text>
+  <text x="538" y="578" class="xs">Inbound TCP 8080 ← 157.85.213.25/32 (IP saya saja)</text>
+  <text x="538" y="600" class="xs">Inbound TCP 22 ← IP layanan Cloud9 (dikelola Cloud9)</text>
+  <text x="538" y="620" class="xs">Outbound: semua</text>
 
-  <!-- IAM -->
-  <rect x="870" y="555" width="440" height="190" rx="14" fill="#fef2f2" stroke="#b91c1c" stroke-width="2.5"/>
-  <text x="890" y="594" class="t">AWS IAM</text>
-  <text x="890" y="620" class="lbl">Execution role: LabRole</text>
-  <text x="890" y="642" class="xs">Dipakai Lambda → izin DynamoDB + CloudWatch Logs</text>
-  <text x="890" y="662" class="xs">(Learner Lab tidak mengizinkan membuat role baru)</text>
-  <text x="890" y="690" class="lbl">Resource-based policy Lambda</text>
-  <text x="890" y="712" class="xs">Hanya apigateway.amazonaws.com dari API ini</text>
-  <text x="890" y="730" class="xs">yang boleh lambda:InvokeFunction</text>
+  <rect x="1105" y="215" width="610" height="430" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="1125" y="244" class="lbl" fill="#1d4ed8">Private Subnet 1 &amp; 2 (DB subnet group, tanpa route ke IGW)</text>
 
-  <!-- CloudWatch -->
-  <rect x="1360" y="560" width="370" height="110" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
-  <text x="1380" y="594" class="t">Amazon CloudWatch Logs</text>
-  <text x="1380" y="620" class="xs">/aws/lambda/facility-tickets-api</text>
-  <text x="1380" y="642" class="xs">Log tiap request (route + id) &amp; error</text>
+  <rect x="1130" y="262" width="560" height="250" rx="12" fill="#fff" stroke="#2563eb" stroke-width="2.5"/>
+  <text x="1150" y="296" class="t">Amazon RDS for MySQL — ticketing-db</text>
+  <text x="1150" y="320" class="xs">db.t3.micro · Single-AZ · 20 GB gp2 · enkripsi at-rest (KMS aws/rds)</text>
+  <text x="1150" y="342" class="xs">Publicly accessible: No · backup otomatis 1 hari</text>
+  <text x="1150" y="364" class="xs">Database: facility_tickets · user: ticketing_admin</text>
+  <text x="1150" y="396" class="lbl">Entitas: tickets</text>
+  <text x="1150" y="418" class="xs">id (PK), ticket_code (unik), title, description, location,</text>
+  <text x="1150" y="438" class="xs">category, priority, status, reporter_name, assignee,</text>
+  <text x="1150" y="458" class="xs">created_at, updated_at · index status</text>
+  <text x="1150" y="490" class="xs">Endpoint privat: ticketing-db.….us-east-1.rds.amazonaws.com</text>
 
-  <!-- Planned Cognito -->
-  <rect x="400" y="590" width="380" height="110" rx="14" fill="#fff" stroke="#6b7280" stroke-width="2" stroke-dasharray="8 6"/>
-  <text x="420" y="624" class="lbl">Amazon Cognito (rencana)</text>
-  <text x="420" y="648" class="xs">JWT authorizer di API Gateway:</text>
-  <text x="420" y="668" class="xs">PUT/DELETE hanya untuk grup "teknisi"</text>
-  <text x="420" y="688" class="xs">+ GSI status-index di DynamoDB</text>
+  <rect x="1130" y="528" width="560" height="100" rx="10" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+  <text x="1148" y="554" class="sg">Security group DB (ticketing-db-sg, sg-05aae6c30dd36e16f)</text>
+  <text x="1148" y="578" class="xs">Inbound TCP 3306 ← HANYA dari security group EC2</text>
+  <text x="1148" y="600" class="xs">(source = sg-07e42b96bb15eb7f2, bukan CIDR)</text>
+  <text x="1148" y="620" class="xs">Tidak ada akses dari internet</text>
 
-  <!-- Arrows main flow -->
-  <path d="M290,230 L398,300" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <path d="M290,390 L398,380" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <path d="M290,538 L398,470" stroke="#6b7280" stroke-width="2.5" fill="none" stroke-dasharray="8 6" marker-end="url(#arrG)"/>
-  <circle cx="335" cy="283" r="15" fill="#1f2937"/><text x="330" y="289" class="num">1</text>
+  <rect x="495" y="665" width="560" height="90" rx="12" fill="#fef2f2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="515" y="694" class="t">AWS IAM</text>
+  <text x="515" y="718" class="xs">Cloud9 memakai kredensial sementara role lab (voclabs) untuk AWS CLI;</text>
+  <text x="515" y="738" class="xs">tidak ada access key jangka panjang di instance maupun repositori.</text>
 
-  <path d="M782,300 L868,300" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <path d="M868,340 L782,340" stroke="#1f2937" stroke-width="2" fill="none" marker-end="url(#arr)" stroke-dasharray="4 4"/>
-  <circle cx="825" cy="278" r="15" fill="#1f2937"/><text x="820" y="284" class="num">2</text>
-  <circle cx="825" cy="364" r="15" fill="#1f2937"/><text x="820" y="370" class="num">5</text>
+  <rect x="1105" y="665" width="610" height="90" rx="12" fill="#fff" stroke="#6b7280" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="1125" y="694" class="lbl">Rencana fase berikutnya</text>
+  <text x="1125" y="716" class="xs">ALB + Auto Scaling Group (2 AZ) · RDS Multi-AZ · kredensial di</text>
+  <text x="1125" y="736" class="xs">Secrets Manager · HTTPS (ACM) · CloudWatch alarm</text>
 
-  <path d="M1252,300 L1338,300" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <path d="M1338,340 L1252,340" stroke="#1f2937" stroke-width="2" fill="none" marker-end="url(#arr)" stroke-dasharray="4 4"/>
-  <circle cx="1295" cy="278" r="15" fill="#1f2937"/><text x="1290" y="284" class="num">3</text>
-  <circle cx="1295" cy="364" r="15" fill="#1f2937"/><text x="1290" y="370" class="num">4</text>
+  <path d="M270,255 L333,330" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M270,395 L333,362" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <circle cx="300" cy="300" r="14" fill="#1f2937"/><text x="295" y="306" class="num">1</text>
+  <path d="M447,345 L518,345" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <circle cx="482" cy="322" r="14" fill="#1f2937"/><text x="477" y="328" class="num">2</text>
+  <circle cx="1000" cy="300" r="14" fill="#1f2937"/><text x="995" y="306" class="num">3</text>
+  <path d="M1032,370 L1128,370" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <text x="1040" y="360" class="xs">TCP 3306</text>
+  <circle cx="1080" cy="395" r="14" fill="#1f2937"/><text x="1075" y="401" class="num">4</text>
+  <path d="M1128,430 L1032,430" stroke="#1f2937" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#arr)"/>
+  <circle cx="1080" cy="455" r="14" fill="#1f2937"/><text x="1075" y="461" class="num">5</text>
 
-  <path d="M1060,465 L1060,558" stroke="#b91c1c" stroke-width="2.5" fill="none" marker-start="url(#arrR)"/>
-  <text x="1072" y="520" font-size="14" fill="#b91c1c" font-weight="600">assume LabRole</text>
-  <path d="M1250,440 L1358,600" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
-  <circle cx="1315" cy="530" r="15" fill="#16a34a"/><text x="1310" y="536" class="num">6</text>
-  <path d="M590,588 L590,548" stroke="#6b7280" stroke-width="2.5" fill="none" stroke-dasharray="8 6" marker-end="url(#arrG)"/>
-
-  <!-- Dev / deployment lane -->
-  <rect x="40" y="800" width="1720" height="230" rx="18" fill="#f9fafb" stroke="#9ca3af" stroke-width="2"/>
-  <text x="65" y="838" font-size="22" font-weight="800" fill="#374151">Alur deployment (developer)</text>
-
-  <rect x="70" y="860" width="320" height="140" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
-  <text x="90" y="894" class="t">GitHub</text>
-  <text x="90" y="918" class="xs">wngstnr-code/facility-ticketing-</text>
-  <text x="90" y="938" class="xs">serverless · README, src/, tests/,</text>
-  <text x="90" y="958" class="xs">scripts/, docs/ · commit bertahap</text>
-  <text x="90" y="980" class="xs">Tanpa kunci AWS di repo</text>
-
-  <rect x="500" y="860" width="420" height="140" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
-  <text x="520" y="894" class="t">AWS CloudShell (Learner Lab)</text>
-  <text x="520" y="920" class="mono">git clone … &amp;&amp; ./scripts/deploy.sh</text>
-  <text x="520" y="944" class="mono">./scripts/smoke-test.sh</text>
-  <text x="520" y="968" class="mono">./scripts/cleanup.sh   # hemat budget</text>
-  <text x="520" y="990" class="xs">Kredensial sesi lab sementara (voclabs)</text>
-
-  <rect x="1030" y="860" width="700" height="140" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
-  <text x="1050" y="894" class="t">AWS CLI membuat / memperbarui resource</text>
-  <text x="1050" y="920" class="xs">1. DynamoDB create-table   2. zip src → Lambda create/update-function</text>
-  <text x="1050" y="944" class="xs">3. API Gateway: create-api, integration, 6 route, stage $default</text>
-  <text x="1050" y="968" class="xs">4. lambda add-permission (API Gateway → Lambda)</text>
-  <text x="1050" y="990" class="xs">Idempoten: aman dijalankan ulang</text>
-
-  <path d="M392,930 L498,930" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <text x="408" y="918" class="xs">git clone</text>
-  <path d="M922,930 L1028,930" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
-  <text x="940" y="918" class="xs">AWS API</text>
-  <path d="M1380,858 L1380,762" stroke="#6b7280" stroke-width="2.5" fill="none" marker-end="url(#arrG)"/>
-  <text x="1392" y="790" class="xs">provisioning</text>
-
-  <!-- Legend flow -->
-  <rect x="40" y="610" width="300" height="170" rx="12" fill="#fff" stroke="#d1d5db"/>
-  <text x="56" y="636" class="lbl">Alur request &amp; data</text>
-  <text x="56" y="660" class="xs">1  Client kirim HTTPS + JSON</text>
-  <text x="56" y="680" class="xs">2  API GW cocokkan route, invoke</text>
-  <text x="56" y="700" class="xs">3  Lambda baca/tulis DynamoDB</text>
-  <text x="56" y="720" class="xs">4  DynamoDB balas item</text>
-  <text x="56" y="740" class="xs">5  Lambda → API GW → client (JSON)</text>
-  <text x="56" y="760" class="xs">6  Log eksekusi ke CloudWatch</text>
+  <rect x="40" y="815" width="1720" height="245" rx="18" fill="#f9fafb" stroke="#9ca3af" stroke-width="2"/>
+  <text x="65" y="852" font-size="21" font-weight="800" fill="#374151">Alur deployment (dijalankan di terminal Cloud9 pada EC2 di atas)</text>
+  <rect x="70" y="872" width="330" height="165" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
+  <text x="90" y="904" class="t">GitHub</text>
+  <text x="90" y="928" class="xs">wngstnr-code/facility-ticketing-aws</text>
+  <text x="90" y="950" class="xs">app/, db/, scripts/, tests/, docs/</text>
+  <text x="90" y="972" class="xs">README + commit bertahap</text>
+  <text x="90" y="994" class="xs">Tanpa password / access key</text>
+  <rect x="470" y="872" width="560" height="165" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
+  <text x="490" y="904" class="t">Langkah</text>
+  <text x="490" y="930" class="mono">1. git clone …/facility-ticketing-aws.git</text>
+  <text x="490" y="952" class="mono">2. ./scripts/provision-rds.sh &lt;IP-saya&gt;/32</text>
+  <text x="490" y="974" class="mono">3. ./scripts/setup-app.sh   (venv + systemd)</text>
+  <text x="490" y="996" class="mono">4. ./scripts/seed.sh &amp;&amp; ./scripts/smoke-test.sh</text>
+  <text x="490" y="1018" class="mono">5. ./scripts/cleanup.sh  → End Lab (hemat budget)</text>
+  <rect x="1100" y="872" width="630" height="165" rx="12" fill="#fff" stroke="#111827" stroke-width="2"/>
+  <text x="1120" y="904" class="t">Yang dibuat provision-rds.sh (AWS CLI)</text>
+  <text x="1120" y="930" class="xs">• Rule SG EC2: 8080 dari IP saya</text>
+  <text x="1120" y="952" class="xs">• SG ticketing-db-sg: 3306 hanya dari SG EC2</text>
+  <text x="1120" y="974" class="xs">• RDS MySQL privat di DB subnet group LabVPC (password acak 24 karakter)</text>
+  <text x="1120" y="996" class="xs">• Menunggu status available, lalu tulis db.env (chmod 600)</text>
+  <text x="1120" y="1018" class="xs">Skrip idempoten: aman dijalankan ulang</text>
+  <path d="M402,955 L468,955" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M1032,955 L1098,955" stroke="#1f2937" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M1400,870 L1400,792" stroke="#6b7280" stroke-width="2.5" fill="none" marker-end="url(#arrG)"/>
+  <text x="1412" y="836" class="xs">provisioning</text>
 </svg>
